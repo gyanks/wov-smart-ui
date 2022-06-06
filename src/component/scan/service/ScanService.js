@@ -1,4 +1,4 @@
-import NvdCvesData from '../../util/data/nvdcve-1.1-2022.json'
+//import NvdCvesData from '../../util/data/nvdcve-1.1-2022.json'
 
 
 
