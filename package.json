@@ -2,8 +2,12 @@
   "name": "cve-scan-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": ">=8.5.2",
+    "node": ">=17.7.1"
+  },
   "dependencies": {
-    "node":"17.7.1",
+    
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@material-ui/core": "^4.12.4",
