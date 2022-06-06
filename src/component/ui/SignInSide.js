@@ -25,6 +25,8 @@ import { Label } from '@mui/icons-material';
 import './SignInSide.css'
 
 function Copyright(props) {
+  // const url="http://localhost:4000/users/authenticate"
+  const url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCo_w00HXo3XxFg9PHOGoRp87PZRxtEuQI"
   return (
 
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -41,30 +43,24 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide(props) {
+  const url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCo_w00HXo3XxFg9PHOGoRp87PZRxtEuQI"
 
   const navigate = useNavigate();
 
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const loginUser = {
-      "username": data.get('username'),
-      "password": data.get("password")
+      "email": data.get('username'),
+      "password": data.get("password"),
+      "returnSecureToken": true
     }
-   
 
-    fetch("http://localhost:4000/users/authenticate", {
-      // Adding method type
+
+    fetch(url, {
       method: "POST",
-
-      // Adding body or contents to send
-      body: JSON.stringify({
-        "username": data.get('username'),
-        "password": data.get('password')
-      }),
-
-      // Adding headers to the request
+      body: JSON.stringify(loginUser),
       headers: {
         "Content-type": "application/json",
         "Access-Control-Allow-Origin": "*"
@@ -79,19 +75,19 @@ export default function SignInSide(props) {
       return response.json()
 
     }).then(serverData => {
-      console.log("user login successful  token is " + serverData.token)
+      alert("user login successful  token is " + serverData.token)
       if (serverData.token !== null)
         localStorage.setItem("logged_in_status", JSON.stringify(true));
-        
-        localStorage.setItem("loginDetails",JSON.stringify(serverData));
+
+      localStorage.setItem("loginDetails", JSON.stringify(serverData));
       localStorage.setItem("loginUser", JSON.stringify(loginUser));
       //alert(localStorage.getItem("logged_in_status"))
-      if(data.loginFlag ==='0')
-      navigate("/home/user/resetPassword");
-      if(data.role ==='user')
-      navigate("/home/project/dashboard");
-      if(data.role === 'admin')
-  navigate("/home/admin");
+      if (data.loginFlag === '0')
+        navigate("/home/user/resetPassword");
+      if (data.role === 'user')
+        navigate("/home/project/dashboard");
+      if (data.role === 'admin')
+        navigate("/home/admin");
 
     })
       .catch(error => console.log("there was error in fetching authntication "))
