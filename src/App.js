@@ -27,7 +27,8 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/login" element={<SignInSide />}> </Route>
-        <Route path="/home" element={<ResponsiveAppBar />}></Route>
+        
+        <Route path="/" element={<ResponsiveAppBar />}></Route>
         <Route path="/home/project/dashboard" element={<ViewDashboard />}></Route>
         <Route path="/home/project/scan" element={<ComponentCvesScan />}></Route>
         
