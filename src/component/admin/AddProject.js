@@ -139,7 +139,7 @@ const AddProject = () => {
 
         }
 
-        alert("Project Object is " + JSON.stringify(project));
+       // alert("Project Object is " + JSON.stringify(project));
 
         // save to db 
 

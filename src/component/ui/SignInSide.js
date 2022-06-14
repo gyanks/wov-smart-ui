@@ -84,7 +84,7 @@ export default function SignInSide(props) {
       return response.json()
 
     }).then(data => {
-      alert("user login successful  token is " + JSON.stringify(data))
+      //alert("user login successful  token is " + JSON.stringify(data))
 
       localStorage.setItem("auth", "true");
       localStorage.setItem("loginDetails", JSON.stringify(data));
