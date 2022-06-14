@@ -1,6 +1,6 @@
 //import NvdCvesData from '../../util/data/nvdcve-1.1-2022.json'
 
-import NvdCvesData from '/home/rak/project/cve-scan-demo/src/component/util/data/nvdcve-1.1-2022.json'
+//import NvdCvesData from '/home/rak/project/cve-scan-demo/src/component/util/data/nvdcve-1.1-2022.json'
 
     /* This method will genrate unique SaanId for scan */
 
@@ -22,7 +22,7 @@ import NvdCvesData from '/home/rak/project/cve-scan-demo/src/component/util/data
    export  const cveScan4Components = (components) => {
         // 
         // method for getting CVES for one component 
-
+/*
         const scanResult4Components = components.map((component) => {
             // get CVEs for one component 
 
@@ -38,6 +38,8 @@ import NvdCvesData from '/home/rak/project/cve-scan-demo/src/component/util/data
         })
 
         return scanResult4Components;
+        */
+       return [{}];
 
     }// close of  function 
 
@@ -52,6 +54,12 @@ import NvdCvesData from '/home/rak/project/cve-scan-demo/src/component/util/data
 
 
     const getAllNvdCves2022 = () => {
+        const NvdCvesData=
+            {CVE_Items: [
+
+                {}
+            ]}
+        
 
         const transforedNvdCves = NvdCvesData.CVE_Items.map(cveData => {
 
