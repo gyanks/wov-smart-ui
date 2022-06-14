@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 
 import ReadXlsSbom from './component/ReadXlsSbom';
 import ResponsiveAppBar from './component/ui/ResponsiveAppBar';
+import NavBar from './component/ui/NavBar';
 import SignInSide from './component/ui/SignInSide';
 import ViewDashboard from './component/projects/ProjectDashboard';
 import ComponentCvesScan from './component/scan/ComponentCvesScan';
@@ -21,14 +22,14 @@ import './App.css';
 
 function App() {
   const navigate = useNavigate();
-  // const history =useNavigate();
+  
   return (
-
+    <div>
+     
     <div className="App">
       <Routes>
         <Route path="/login" element={<SignInSide />}> </Route>
-        
-        <Route path="/" element={<ResponsiveAppBar />}></Route>
+        <Route path="/home" element={<ResponsiveAppBar />}></Route>
         <Route path="/home/project/dashboard" element={<ViewDashboard />}></Route>
         <Route path="/home/project/scan" element={<ComponentCvesScan />}></Route>
         
@@ -44,6 +45,7 @@ function App() {
       </Routes>
 
 
+    </div>
     </div>
 
 

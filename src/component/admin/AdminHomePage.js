@@ -1,8 +1,9 @@
 
+import NavBar from "../ui/NavBar";
 import "./AdminHomePage.css"
 
 const AdminHomePage = () => {
-    const user = localStorage.getItem("user");
+    const user = JSON.parse(localStorage.getItem("loginDetails"));
 
     // header 
     // navigation 
@@ -12,7 +13,9 @@ const AdminHomePage = () => {
     return (
 
         <div>
-            <h1 className="header"> Welcome {user.firstName} to Admin Console </h1>
+            <h1 className="header"> Welcome {user.body.firstName} to Admin Console </h1>
+            
+            
             <div className="navBox">
             <div class="navbar">
                 <a href="/home/user/registration"> Create User </a>
@@ -24,7 +27,7 @@ const AdminHomePage = () => {
                 </div>
            
             </div>
-
+    
 
 
         </div>

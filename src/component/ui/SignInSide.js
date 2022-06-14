@@ -25,8 +25,6 @@ import { Label } from '@mui/icons-material';
 import './SignInSide.css'
 
 function Copyright(props) {
-  // const url="http://localhost:4000/users/authenticate"
-  const url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCo_w00HXo3XxFg9PHOGoRp87PZRxtEuQI"
   return (
 
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -43,50 +41,62 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide(props) {
-  const url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCo_w00HXo3XxFg9PHOGoRp87PZRxtEuQI"
 
   const navigate = useNavigate();
 
-
+  localStorage.removeItem("loginDetails");
+  localStorage.removeItem("auth");
+  
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const loginUser = {
-      "email": data.get('username'),
-      "password": data.get("password"),
-      "returnSecureToken": true
+      "username": data.get('username'),
+      "password": data.get("password")
     }
 
 
-    fetch(url, {
+    fetch("https://5w3a2f7pqh.execute-api.ap-southeast-1.amazonaws.com/dev/login", {
+      // Adding method type
       method: "POST",
-      body: JSON.stringify(loginUser),
+
+      // Adding body or contents to send
+      body: JSON.stringify({
+        "email": data.get('username'),
+        "password": data.get('password')
+      }),
+
+      // Adding headers to the request
       headers: {
         "Content-type": "application/json",
         "Access-Control-Allow-Origin": "*"
       }
     }).then(response => {
-
+      /* 
       if (!response.ok) {
         const error = (data && data.message) || response.status;
         console.log('User not authenticated ' + error)
         return Promise.reject(error);
-      }
+      } */
+      //alert("response")
+      console.log('received response from server 200 OK')
       return response.json()
 
-    }).then(serverData => {
-      alert("user login successful  token is " + serverData.token)
-      if (serverData.token !== null)
-        localStorage.setItem("logged_in_status", JSON.stringify(true));
+    }).then(data => {
+      alert("user login successful  token is " + JSON.stringify(data))
 
-      localStorage.setItem("loginDetails", JSON.stringify(serverData));
-      localStorage.setItem("loginUser", JSON.stringify(loginUser));
+      localStorage.setItem("auth", "true");
+      localStorage.setItem("loginDetails", JSON.stringify(data));
+
       //alert(localStorage.getItem("logged_in_status"))
-      if (data.loginFlag === '0')
-        navigate("/home/user/resetPassword");
-      if (data.role === 'user')
+      /*
+      if(data.loginFlag ==='0')
+      navigate("/home/user/resetPassword");
+      */
+      if (data.body.role === 'user')
         navigate("/home/project/dashboard");
-      if (data.role === 'admin')
+      if (data.body.role === 'admin' || data.body.role === 'Admin')
         navigate("/home/admin");
 
     })

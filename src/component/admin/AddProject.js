@@ -5,7 +5,7 @@ import "./AddProject.css"
 const AddProject = () => {
 
     const navigate = useNavigate();
-
+/*
     const [projectName, setProjectName] = useState();
     const [projectId, setProjectId] = useState();
     const [clientName, setClientName] = useState();
@@ -96,7 +96,7 @@ const AddProject = () => {
     const saveProject2DB = () => {
 
 
-        fetch("http://localhost:4002/projects", {
+        fetch("https://5w3a2f7pqh.execute-api.ap-southeast-1.amazonaws.com/dev/project", {
 
             method: "POST",
             body: JSON.stringify(projectData),
@@ -118,36 +118,32 @@ const AddProject = () => {
 
         // saveProject2DB
     };
-
+*/
     const submitHandler = (event) => {
         event.preventDefault();
-    const data = new FormData(event.currentTarget);
-        alert("inside submit")
-        console.log("creating project Object .. ")
+    const projectData = new FormData(event.currentTarget);
+        
         const project = {
-            "_id": projectId,
-            projectName,
-            version,
-            clientName,
-            creationDate: new Date(),
-            owner: {
-                "_id": ownerId,
-                "name": ownerName
-            },
-            admin: {
-                "_id": adminId,
-                "name": adminName
-            }
+            "id": projectData.get("projectId"),
+            projectName:projectData.get("projectName"),
+            //version,
+            client_name:projectData.get("clientName"),
+            creation_date: new Date(),
+            owner: projectData.get("ownerName"),
+            admin: projectData.get("adminName"),
+            users:[
+                {"id":"Rakesh.Ranjan@bosch.com"}
+            ]
 
 
 
         }
 
-        console.log("Project Object is " + JSON.stringify(project));
+        alert("Project Object is " + JSON.stringify(project));
 
         // save to db 
 
-        fetch("http://localhost:4002/projects", {
+        fetch("https://5w3a2f7pqh.execute-api.ap-southeast-1.amazonaws.com/dev/project", {
 
             method: "POST",
             body: JSON.stringify(project),
@@ -161,7 +157,7 @@ const AddProject = () => {
             return response.json()
 
         }).then(data => {
-            console.log("Project " + projectId + "created successfully in DB ");
+            alert("Project added successfully ")
             navigate("/home/admin");
 
         })
@@ -176,55 +172,60 @@ const AddProject = () => {
 
 const  AddProjectForm= () =>{
 
+    /*<div className="row">
+                    <label className="col-10">Project Name</label>
+                    <input className="col-90" type="text"  id="projectName" ></input>
+                </div>
+
+
+
+                */
+
 
     return (
 
 
 
-        <div className="container">
+        <div className="book__form">
 
             <form onSubmit={submitHandler}>
 
-                <div className="row">
-                    <label className="col-10">Project ID</label>
-                    <input className="col-90" id="projectId" type="text" ></input>
+                <div className="form__group">
+                    <label className="form__label">Project ID</label>
+                    <input className="form__input"  id="projectId" name="projectId" type="text" ></input>
                 </div>
-                <div className="row">
-                    <label className="col-10">Project Name</label>
-                    <input className="col-90" type="text"  id="projectName" ></input>
-                </div>
-
-                <div className='row'>
-                    <label className='col-10'>Version</label>
-                    <input className="col-90" type="text" id="version"></input>
-                </div>
-                <div className="row">
-                    <label className="col-10">Client Name</label>
-                    <input className="col-90" type="text" value={clientName} onChange={clientNameHandler}></input>
-                </div>
-                <div className='row'>
-                    <label className="col-10">Owner Id </label>
-                    <input className="col-90" type="text" value={ownerId} onChange={ownerIdHandler}></input>
-                </div>
-                <div className="row">
-                    <label className='col-10'>Owner Name </label>
-                    <input className="col-90" type="text" value={ownerName} onChange={ownerNameHandler}></input>
+                
+                <div className="form__group">
+                    <label className="form__label">Project Name</label>
+                    <input className="form__input" type="text" name="projectName" ></input>
                 </div>
 
-                <div className="row">
-                    <label className='col-10'>Admin Id  </label>
-                    <input className="col-90" type="text" value={adminId} onChange={adminIdHandler}></input>
+                <div className='form__group'>
+                    <label className='form__label'>Version</label>
+                    <input className="form__input" type="text" name="version"></input>
+                </div>
+                <div className="form__group">
+                    <label className="form__label">Client Name</label>
+                    <input className="form__input" type="text" name="clientName" ></input>
+                </div>
+                
+                <div className="form__group">
+                    <label className='form__label'>Owner Name </label>
+                    <input className="form__input" type="text" name="ownerName" ></input>
                 </div>
 
+                
 
-                <div className="row">
-                    <label className="col-10">Admin Name</label>
-                    <input className="col-90" type="text" value={adminName} onChange={adminNameHandler}></input>
+
+                <div className="form__group">
+                    <label className="form__label">Admin Name</label>
+                    <input className="form__input" type="text" name="adminName" ></input>
                 </div>
 
-
-
-                <button type="submit"> Submit</button>
+                <div className="form__group">
+               
+                <button  className= "btn btn--green " type="submit"> Submit</button>
+                </div>
             </form>
 
 

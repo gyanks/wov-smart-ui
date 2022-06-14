@@ -71,7 +71,7 @@ const RegisterUser = () => {
         lastName,
        
         mobile,
-        "password": "password",
+        "hash":'aaa',
         "loginFlag":"0",
         role,
         company
@@ -81,7 +81,7 @@ const RegisterUser = () => {
 
       console.log(" for registrtion" + JSON.stringify(userRegistration));
 
-      fetch("http://localhost:4000/users/register", {
+      fetch("https://5w3a2f7pqh.execute-api.ap-southeast-1.amazonaws.com/dev/users/register", {
 
         method: "POST",
         body: JSON.stringify(userRegistration),
@@ -100,7 +100,7 @@ const RegisterUser = () => {
         return response.json()
 
       }).then(data => {
-        console.log("user registerd successful " + data);
+        console.log("user registerd successful " + JSON.stringify(data));
         navigate("/home/admin");
 
       })
@@ -111,7 +111,7 @@ const RegisterUser = () => {
 
 
 
-
+/*
     const saveToDb = (user) => {
 
       fetch("http://localhost:4000/users/register", {
@@ -143,7 +143,7 @@ const RegisterUser = () => {
         .catch(error => console.log("there was error in user registration " + error))
     }
 
-
+*/
 
 
 
