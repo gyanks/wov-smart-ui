@@ -25,7 +25,7 @@ function App() {
   
   return (
     <div>
-     
+     <NavBar></NavBar>
     <div className="App">
       <Routes>
         <Route path="/login" element={<SignInSide />}> </Route>
