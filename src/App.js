@@ -12,9 +12,10 @@ import DisplayScanResults from './component/scan/DisplayScanResults';
 import RegisterUser from './component/ui/user/RegisterUser';
 import AdminHomePage from './component/admin/AdminHomePage';
 
-import AssignProject from './component/admin/AssignProject';
+import ManageRole from './component/admin/ManageRole';
 import AddProject from './component/admin/AddProject';
 import ResetPassword from './component/ui/user/ResetPassword';
+
 import './App.css';
 
 
@@ -39,7 +40,7 @@ function App() {
         <Route path="/home/user/registration" element={<RegisterUser />}></Route>
         <Route path="/home/user/resetPassword" element={<ResetPassword />}></Route>
         <Route path="/home/admin" element={<AdminHomePage />}></Route>
-        <Route path="/home/admin/assign" element={<AssignProject />}></Route>
+        <Route path="/home/admin/role" element={<ManageRole />}></Route>
         <Route path="/home/admin/project/add" element={<AddProject />}></Route>
 
       </Routes>

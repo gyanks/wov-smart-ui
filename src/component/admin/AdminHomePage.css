@@ -1,6 +1,6 @@
-/*
 
-.header {
+
+.header__admin {
 
     display: block;
     background-color: aquamarine;
@@ -9,6 +9,7 @@
     border: 0px solid black;
     padding: 10px ;
     margin:10px;
+    text-decoration: none;
 }
 
 
@@ -82,4 +83,4 @@ body {
   .dropdown:hover .dropdown-content {
     display: block;
   }
-  */
+  

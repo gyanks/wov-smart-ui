@@ -73,12 +73,12 @@ export default function SignInSide(props) {
         "Access-Control-Allow-Origin": "*"
       }
     }).then(response => {
-      /* 
+      
       if (!response.ok) {
-        const error = (data && data.message) || response.status;
+        const error =  response.status;
         console.log('User not authenticated ' + error)
         return Promise.reject(error);
-      } */
+      } 
       //alert("response")
       console.log('received response from server 200 OK')
       return response.json()
