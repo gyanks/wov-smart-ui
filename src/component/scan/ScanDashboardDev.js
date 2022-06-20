@@ -5,14 +5,14 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import MaterialTable from 'material-table';
 import DetailsIcon from '@mui/icons-material/Details';
 
-const ScanDashboard = (props) => {
+const ScanDashboardDev = (props) => {
 
     const navigate= useNavigate();
-    
-    const [cveList, setCveList] = useState();
 
+    const cveList=props.cveList;
+/*
+    //const [cveList, setCveList] = useState();
 
-    /*
  //let listOfCve=[];
     const filterScanComponent = () => {
         const dbComponents = props.dbData.components.filter(comp => comp.scanComponent.componentName === props.reportComp.componentName && comp.scanComponent.version === props.reportComp.version)
@@ -80,4 +80,4 @@ const ScanDashboard = (props) => {
 
 }
 
-export default ScanDashboard;
+export default ScanDashboardDev;
