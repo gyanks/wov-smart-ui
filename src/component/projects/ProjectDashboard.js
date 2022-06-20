@@ -36,12 +36,12 @@ const ProjectDashboard = () => {
 
     const getAllProjects = () => {
 
-        fetch("http://localhost:4002/projects").
+        fetch("https://5w3a2f7pqh.execute-api.ap-southeast-1.amazonaws.com/dev/getprojects").
             then(response => response.json())
             .then(projects => { return projects })
             .then(projects => {
-                const userProjects = projects.filter(project => project.owner.toLowerCase() == username.toLowerCase());
-                setProjects(userProjects);
+                //const userProjects = projects.filter(project => project.owner.toLowerCase() == username.toLowerCase());
+                setProjects(projects);
 
             })
             .catch(error => console.log(' There is error while accessing data ' + error))
