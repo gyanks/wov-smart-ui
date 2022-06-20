@@ -7,7 +7,14 @@ line-height: 1.66666667;
 text-align: left;
 
 }
-
+.error{
+     color:red;
+     border:5px solid yellowgreen;
+     position: relative;
+     margin: 500px,100px;
+     height: 100px;
+     width: auto;
+}
 
 
 .card-sign-in{
@@ -25,12 +32,12 @@ background-clip: border-box;
   margin-bottom: 0px;
 
 
-max-width: 500px;
 border-top: 0;
 box-shadow: 0 0 0;
 
 margin-right: 1%;
-height: 350px;
+height:800px;
+
 
 }
 
@@ -101,7 +108,9 @@ flex-wrap: wrap;
 }
 
 .login-button {
-text-align: center;
+    display: flex;
+    justify-content: center;
+
 color: #fff;
 font-family: sans-serif;
 font-weight: 300;
@@ -109,7 +118,7 @@ line-height: 48px;
 font-size: 14px;
 padding: 0 16px;
 cursor: pointer;
-background-image: linear-gradient(to top,#008ecf 50%,#005691 50%);
+background-image: linear-gradient(to top,#e1e9ec 50%,#e1ddc3 50%);
 background-size: 100% 200%;
 transition: .2s;
 border-radius: 0;
@@ -131,7 +140,7 @@ list-style: none;
 
 .banner-text {
     position: absolute;
-    bottom: 10vh;
+    bottom: auto;
     background: rgba(0,0,0,0.5);
     width: 100%;
     color: white;

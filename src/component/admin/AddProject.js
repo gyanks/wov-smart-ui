@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import "./AddProject.css"
 const AddProject = () => {
 
+    const [error,setError] = useState();
+        
+
     const navigate = useNavigate();
 /*
     const [projectName, setProjectName] = useState();
@@ -157,8 +160,22 @@ const AddProject = () => {
             return response.json()
 
         }).then(data => {
+            if(data.statusCode===200){
             alert("Project added successfully ")
             navigate("/home/admin");
+            }
+            else{
+
+                if(data.statusCode===409){
+                    setError({
+                        isError:true,
+                        errorMessage:"Project already exist in system "
+                    })
+
+                    alert("Project name already exist ")
+                    Promise.reject("Project name already exist ")
+                }
+            }
 
         })
             .catch(error => console.log("there was error in user registration " + error));
@@ -228,7 +245,10 @@ const  AddProjectForm= () =>{
                 </div>
             </form>
 
+                 <div style={{'color':'red'}}>  
 
+                     <h4> {error.isError?error.errorMessage: " "}</h4>
+                 </div>
         </div>
 
 

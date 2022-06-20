@@ -25,7 +25,7 @@ const ComponentCvesScan = (props) => {
 
 
     const loadFromApi = () => {
-        fetch("http://localhost:4004/scan").
+        fetch("https://5w3a2f7pqh.execute-api.ap-southeast-1.amazonaws.com/dev/scanforvulnerabilities").
             then(response => response.json()).
             then(result => setDbScanData(result))
             .catch(error => " There was error while featching Scan data from server" + error)

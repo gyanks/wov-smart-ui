@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -46,8 +47,11 @@ export default function SignInSide(props) {
 
   localStorage.removeItem("loginDetails");
   localStorage.removeItem("auth");
-  
-  
+  const [error, setError] = useState({
+    'isError': false,
+    'errorMessage': ''
+  })
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -73,35 +77,79 @@ export default function SignInSide(props) {
         "Access-Control-Allow-Origin": "*"
       }
     }).then(response => {
-      
+
       if (!response.ok) {
-        const error =  response.status;
-        console.log('User not authenticated ' + error)
+        const error = response.status;
+        const tempError = {
+          'isError': true,
+          'errorMessage': error
+
+        }
+        setError(tempError);
+
+
         return Promise.reject(error);
-      } 
-      //alert("response")
-      console.log('received response from server 200 OK')
-      return response.json()
+      }
+      else {
+
+
+        return response.json()
+
+
+      }
 
     }).then(data => {
-      //alert("user login successful  token is " + JSON.stringify(data))
+      /* If user id not exist */
 
-      localStorage.setItem("auth", "true");
-      localStorage.setItem("loginDetails", JSON.stringify(data));
+      if (data.statusCode === 404) {
+        const tempError = {
+          'isError': true,
+          'errorMessage': ' User Does Not exist , please Register yourself '
 
-      //alert(localStorage.getItem("logged_in_status"))
-      /*
-      if(data.loginFlag ==='0')
-      navigate("/home/user/resetPassword");
-      */
-      if (data.body.role === 'user')
-        navigate("/home/project/dashboard");
-      if (data.body.role === 'admin' || data.body.role === 'Admin')
-        navigate("/home/admin");
+        }
+        setError(tempError);
+        return Promise.reject(tempError.errorMessage)
 
+      }
+      /* if password not match */
+      if (data.statusCode === 401) {
+        const tempError = {
+          'isError': true,
+          'errorMessage': ' There is some error in authentication userId or Password not match '
+
+        }
+        setError(tempError);
+        return Promise.reject(tempError.errorMessage)
+
+      }
+
+      /* user logged in successfully */
+      if (data.statusCode === 200) {
+        localStorage.setItem("auth", "true");
+        localStorage.setItem("loginDetails", JSON.stringify(data));
+        // navigation page 
+
+        if (data.body.role === 'user')
+          navigate("/home/project/dashboard");
+        if (data.body.role === 'admin' || data.body.role === 'Admin')
+          navigate("/home/admin");
+
+      }
     })
       .catch(error => console.log("there was error in fetching authntication "))
   }
+
+
+  /* <Grid className='flex-container banner-text'>
+
+          <div className='flex-item1'></div>
+          <div className='flex-item2 main-text'> Say No to  <span className='flex-item2 main-text font-red' > Vulnerability </span>   </div>
+          <div className='main-text2'> Vulnerability free Mobility </div>
+        </Grid>
+      </Grid>
+      <Copyright sx={{ mt: 5, backgroundColor: 'white', align: 'left' }} />
+
+      */
 
   return (
 
@@ -133,7 +181,7 @@ export default function SignInSide(props) {
 
 
             <header className='login-header'>
-              <h1> Sign in to your account </h1>
+              <h1> Sign in to Wov Smart </h1>
 
             </header>
 
@@ -143,7 +191,7 @@ export default function SignInSide(props) {
 
 
               <div className='form-group'>
-                <label > Username or email </label>
+                <label >  Email </label>
                 <TextField className='form-control'
                   margin="normal"
                   required
@@ -174,42 +222,35 @@ export default function SignInSide(props) {
               </div >
 
 
-              <div className='forget-pass'>
-
-                <a href=''> Forget Password </a>
-              </div>
-
-              <div className=' login-button form-group'>
-
-                <input type="submit" value="log In" name="LogIn" className='btn btn-primary btn-block '></input>
 
 
+              <div className=' login-button '>
+
+                <input type="submit" value="Sign In" name="LogIn"></input>
 
               </div>
+
+
 
             </form>
 
+            <div className="error">
+              <h3>    {error.isError ? error.errorMessage : ' '}</h3>
 
-          </div>
-
-          <div>
-            <img src="/home/rak/project/cve-scan-demo/src/component/ui/image/bottom.jpg" height={300} width={300}></img>
-
-          </div>
+            </div>
+          </div >
 
 
 
-        </Grid>
-        <Grid className='flex-container banner-text'>
 
-          <div className='flex-item1'></div>
-          <div className='flex-item2 main-text'> Say No to  <span className='flex-item2 main-text font-red' > Vulnerability </span>   </div>
-          <div className='main-text2'> Vulnerability free Mobility </div>
+
         </Grid>
       </Grid>
-      <Copyright sx={{ mt: 5, backgroundColor: 'white', align: 'left' }} />
+
     </ThemeProvider>
 
 
   );
+
+
 }

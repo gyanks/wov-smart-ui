@@ -18,7 +18,10 @@ const RegisterUser = () => {
 
     // States for checking the errors
     const [submitted, setSubmitted] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState({
+      'isError': false,
+      "errorMessage": ""
+    });
 
 
     const userIdHandler = (e) => {
@@ -69,10 +72,10 @@ const RegisterUser = () => {
         "username": userId,
         firstName,
         lastName,
-       
+
         mobile,
-        "hash":'aaa',
-        "loginFlag":"0",
+        "hash": 'aaa',
+        "loginFlag": "0",
         role,
         company
 
@@ -91,18 +94,33 @@ const RegisterUser = () => {
           "Access-Control-Allow-Origin": "*"
         }
       }).then(response => {
-        console.log(response, response.json())
-        if (!response.ok) {
 
-          console.log('User Registration failed  ' + error)
-          return Promise.reject(error);
-        }
+
         return response.json()
+      }
 
-      }).then(data => {
-        console.log("user registerd successful " + JSON.stringify(data));
-        navigate("/home/admin");
+      ).then(data => {
 
+        if (data.statusCode === 200) {
+          alert("user registered successful " + JSON.stringify(data));
+          navigate("/home/admin");
+        }
+        if (data.statusCode === 409) {
+          setError({
+            "isError": true,
+            "errorMessage": "User already exist with this email id"
+          })
+          alert(" User already exist with this email id");
+          Promise.reject("User already exist with this email id")
+        }
+        if (data.statusCode === 408) {
+          setError({
+            "isError": true,
+            "errorMessage": " Unable to send email to this Id, please contact Admin "
+          })
+          alert("Unable to send email to this Id, please contact Admin ");
+          Promise.reject("Unable to send email to this Id, please contact Admin")
+        }
       })
         .catch(error => console.log("there was error in user registration " + error));
 
@@ -111,39 +129,39 @@ const RegisterUser = () => {
 
 
 
-/*
-    const saveToDb = (user) => {
-
-      fetch("http://localhost:4000/users/register", {
-
-        method: "POST",
-
-
-        body: JSON.stringify(user),
-
-
-        headers: {
-          "Content-type": "application/json",
-          "Access-Control-Allow-Origin": "*"
+    /*
+        const saveToDb = (user) => {
+    
+          fetch("http://localhost:4000/users/register", {
+    
+            method: "POST",
+    
+    
+            body: JSON.stringify(user),
+    
+    
+            headers: {
+              "Content-type": "application/json",
+              "Access-Control-Allow-Origin": "*"
+            }
+          }).then(response => {
+    
+            if (!response.ok) {
+    
+              console.log('User Registration failed  ' + error)
+              return Promise.reject(error);
+            }
+            return response.json()
+    
+          }).then(data => {
+            console.log("user registerd successful " + data)
+    
+    
+          })
+            .catch(error => console.log("there was error in user registration " + error))
         }
-      }).then(response => {
-
-        if (!response.ok) {
-
-          console.log('User Registration failed  ' + error)
-          return Promise.reject(error);
-        }
-        return response.json()
-
-      }).then(data => {
-        console.log("user registerd successful " + data)
-
-
-      })
-        .catch(error => console.log("there was error in user registration " + error))
-    }
-
-*/
+    
+    */
 
 
 
@@ -154,10 +172,10 @@ const RegisterUser = () => {
 
         <form onSubmit={submitHandler}>
           <div className="row">
-          <div className="row">
-            <label className="col-10">Email </label>
-            <input className="col-90" type="text" value={userId} onChange={userIdHandler}></input>
-          </div>
+            <div className="row">
+              <label className="col-10">Email </label>
+              <input className="col-90" type="text" value={userId} onChange={userIdHandler}></input>
+            </div>
             <label className="col-10">FirstName</label>
             <input className="col-90" type="text" value={firstName} onChange={firstNameHandler}></input>
           </div>
@@ -166,7 +184,7 @@ const RegisterUser = () => {
             <label className='col-10'>LastName</label>
             <input className="col-90" type="text" value={lastName} onChange={lastNameHandler}></input>
           </div>
-          
+
           <div className='row'>
             <label className="col-10">Mobile Number</label>
             <input className="col-90" type="text" value={mobile} onChange={mobileHandler}></input>
@@ -182,14 +200,17 @@ const RegisterUser = () => {
           </div>
 
 
-          
+
 
 
 
           <button type="submit"> Submit</button>
         </form>
 
+         <div style={{color:red}}> 
 
+           <h3> {error.isError ?error.errorMessage : " "}</h3>
+         </div>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import Select from 'react-select'
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MaterialTable from 'material-table';
 import './ManageRole.css'
 
@@ -10,6 +11,8 @@ const ManageRole = () => {
     const [selectedProject, setSelectedProject] = useState();
     const [selectedRole, setSelectedRole] = useState();
     const [usersRole, setUsersRole] = useState([]);
+
+    const navigate= useNavigate();
 
     //let usersArray = [];
 
@@ -198,7 +201,18 @@ const ManageRole = () => {
                 }
 
             })
-            .then(data => alert("Users successfully assigned to Project "))
+            .then(data => {
+                if(data.statusCode===200){
+                
+                alert("Users successfully assigned to Project ")
+                      navigate("/home/admin")
+                }
+                else{
+                    alert("there is error in  assigning users  to Project ") 
+                }
+                })
+
+
             .catch(error => alert("There was error while adding users to project" + error))
 
     }
