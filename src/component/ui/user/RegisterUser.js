@@ -207,7 +207,7 @@ const RegisterUser = () => {
           <button type="submit"> Submit</button>
         </form>
 
-         <div style={{color:red}}> 
+         <div style={{"color":'red'}}> 
 
            <h3> {error.isError ?error.errorMessage : " "}</h3>
          </div>
