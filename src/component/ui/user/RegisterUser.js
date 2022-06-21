@@ -101,10 +101,7 @@ const RegisterUser = () => {
 
       ).then(data => {
 
-        if (data.statusCode === 200) {
-          alert("user registered successful " + JSON.stringify(data));
-          navigate("/home/admin");
-        }
+        
         if (data.statusCode === 409) {
           setError({
             "isError": true,
@@ -121,6 +118,11 @@ const RegisterUser = () => {
           alert("Unable to send email to this Id, please contact Admin ");
           Promise.reject("Unable to send email to this Id, please contact Admin")
         }
+
+        
+          alert("user registered successful " + JSON.stringify(data));
+          navigate("/home/admin");
+        
       })
         .catch(error => console.log("there was error in user registration " + error));
 
