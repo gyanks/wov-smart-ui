@@ -8,7 +8,7 @@ import SignInSide from './component/ui/SignInSide';
 import ViewDashboard from './component/projects/ProjectDashboard';
 import ComponentCvesScan from './component/scan/ComponentCvesScan';
 import DisplayScanResults from './component/scan/DisplayScanResults';
-//import ReadXlsSbom from './component/ReadXlsSbom'
+
 import RegisterUser from './component/ui/user/RegisterUser';
 import AdminHomePage from './component/admin/AdminHomePage';
 
@@ -27,7 +27,9 @@ function App() {
   return (
     <div>
      <NavBar></NavBar>
+     
     <div className="App">
+     
       <Routes>
         <Route path="/login" element={<SignInSide />}> </Route>
         <Route path="/home" element={<ResponsiveAppBar />}></Route>

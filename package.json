@@ -32,6 +32,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "react-select": "^5.3.2",
+    "react-xml-parser": "^1.1.8",
     "recharts": "^2.1.9",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.2"
