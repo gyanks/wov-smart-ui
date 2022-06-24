@@ -43,10 +43,10 @@ const processJsonSbom = (file) => {
 
 
     reader.onload = evt => {
-        const readerData = evt.target.result;
-
-        const parser = new DOMParser();
-        const jsonData = parser.parseFromString(readerData, "text/html");
+       // const readerData = evt.target.result;
+   //const readerData= reader.result;
+       // const parser = new DOMParser();
+        const jsonData = JSON.parse(reader.result);
 
         console.log(JSON.stringify(jsonData));
     }
