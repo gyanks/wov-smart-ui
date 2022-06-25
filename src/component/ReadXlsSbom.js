@@ -24,7 +24,7 @@ import './ReadXlsSbom.css'
 const ReadXlsSbom = (props) => {
     const [scanComponents, setScanComponents] = useState([]);
     const [sbomFmt, setSbomFmt] = useState();
-    const [type,setType] = useState();
+    const [accept, setAccept] = useState();
     const params = useParams();
     //const {project} =params;
 
@@ -34,7 +34,7 @@ const ReadXlsSbom = (props) => {
         const [file] = e.target.files;
 
         if (sbomFmt === 'xls') {
-            setType(".xls, .xlsx")
+
 
             const reader = new FileReader();
 
@@ -53,71 +53,65 @@ const ReadXlsSbom = (props) => {
 
                         componentName: component.ComponentName,
                         version: component.ComponentVersion,
-                        vendor:component.VendorName
+                        vendor: component.VendorName
 
                     }
                 });
                 setScanComponents(scanComponents);
                 //console.log(JSON.stringify(scanComponents));
-               
+
 
             };
             reader.readAsBinaryString(file);
             // console.log("processing excel formate "+sbomFmt);
             // const components=SbomService.processXlsSbom(file);
             alert("proccesed components form XLS " + JSON.stringify(scanComponents))
-           
+
         }
         if (sbomFmt === 'xml') {
-            setType("text/xml")
+
             const reader = new FileReader();
 
             reader.readAsText(file);
-        
-        
+
+
             reader.onload = evt => {
                 const readerData = evt.target.result;
-        
+
                 const parser = new DOMParser();
                 const xml = parser.parseFromString(readerData, "text/xml");
-                /*
-                 console.log(
-                     "data",
-                     new XMLSerializer().serializeToString(xml.documentElement)
-                 );
-                 */
-                // var XMLParser = require("react-xml-parser");
+
                 var objectXml = new XMLParser().parseFromString(
                     new XMLSerializer().serializeToString(xml.documentElement)
                 );
-        
+
                 //console.log("XML Object", JSON.stringify(objectXml));
-        
+
                 const pomDependencies = objectXml.getElementsByTagName("dependencies");
-        
-               // console.log("Dependencies " + JSON.stringify(pomDependencies[0]));
-        
+
+                // console.log("Dependencies " + JSON.stringify(pomDependencies[0]));
+
                 const scanComponent = pomDependencies[0].children.map((dependency) => {
-        
-        
+
+
                     return {
-                         "vendor":dependency.children[0].value,
+                        "vendor": dependency.children[0].value,
                         "componentName": dependency.children[1].value,
                         "version": dependency.children[2].value
-        
-        
+
+
                     }
-        
-        
-        
-        
-        
+
+
+
+
+
                 });
                 alert(" scanComponents from pom.xml " + JSON.stringify(scanComponent))
                 setScanComponents(scanComponent);
             }
-        
-        
+
+
             /* console.log("processing pom.xmlformate "+sbomFmt);
             const components = SbomService.processXmlSbom(file);
             console.log("proccesed components " + JSON.stringify(components))
@@ -126,12 +120,31 @@ const ReadXlsSbom = (props) => {
 
         }
         if (sbomFmt === 'json') {
-            setType("application/json")
-            console.log("processing Package.json formate " + sbomFmt);
-            const components = SbomService.processJsonSbom(file);
-            console.log("proccesed components " + JSON.stringify(components))
 
-            setScanComponents(components);
+            const fileReader = new FileReader();
+            fileReader.readAsText(e.target.files[0], "UTF-8");
+            fileReader.onload = e => {
+                console.log("Package.json", e.target.result);
+                const packageData = JSON.parse(e.target.result).dependencies;
+                console.log(" dependencies " + JSON.stringify(packageData));
+                // extracting each components and version 
+                const components = Object.keys(packageData).reduce((result, currentKey) => {
+                    if (typeof packageData[currentKey] === 'string' || packageData[currentKey] instanceof String) {
+
+                        const component = {
+                            "componentName": currentKey,
+                            "version": packageData[currentKey].substring(1)
+                        }
+                        result.push(component);
+                    }
+
+                   return result;
+                }, []);
+                console.log("scan components "+ JSON.stringify(components))
+                setScanComponents(components);
+            };
+
+            
         }
 
 
@@ -142,8 +155,15 @@ const ReadXlsSbom = (props) => {
 
     const selectHandler = (event) => {
 
-        alert("please upload in " + event.target.value);
+        //alert("please upload in " + event.target.value);
+        const type = event.target.value;
         setSbomFmt(event.target.value);
+        if (type === "xls")
+            setAccept(".xls ,.xlsx")
+        if (type === "xml")
+            setAccept("text/xml")
+        if (type === "json")
+            setAccept("application/json")
     }
 
 
@@ -158,14 +178,14 @@ const ReadXlsSbom = (props) => {
 
                 <p class="main-text">  Project for Scan : {scanproject}  </p>
 
-                SBOm Format   <select onChange={selectHandler}>
+                SBOM Format   <select onChange={selectHandler}>
                     <option value="xls">Excel Sheet</option>
                     <option value="xml">POM XML</option>
                     <option value="json">Package JSON</option>
                 </select>
 
                 <p style={{ textAlign: "center" }}>please upload SBOM
-                    <input style={{ padding: "15px" }} type="file" accept={type} onChange={onChange} />
+                    <input style={{ padding: "15px" }} type="file" accept={accept} onChange={onChange} />
                 </p>
             </div>
 

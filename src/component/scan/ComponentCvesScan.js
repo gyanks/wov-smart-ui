@@ -1,8 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-
+import Select from 'react-select'
 import MaterialTable from 'material-table';
+
 import DetailsIcon from '@mui/icons-material/Details';
 
 import CvesScanService from './CvesScanService';
@@ -26,11 +27,11 @@ const ComponentCvesScan = (props) => {
 
     const scanComponentsFromApi = () => {
         //console.log("scanning for components "+ JSON.stringify(props.components))
-        const requestBody= {
-            "scanComponents":props.components
+        const requestBody = {
+            "scanComponents": props.components
         };
 
-        console.log("API call  for components "+ JSON.stringify(requestBody));
+        console.log("API call  for components " + JSON.stringify(requestBody));
 
         fetch("https://5w3a2f7pqh.execute-api.ap-southeast-1.amazonaws.com/dev/scanforvulnerabilities", {
             method: "POST",
@@ -43,18 +44,18 @@ const ComponentCvesScan = (props) => {
         }).
             then(response => response.json()).
             then(result => {
-                console.log("scan result from api"+ JSON.stringify(result.scanResults))
+                console.log("scan result from api" + JSON.stringify(result.scanResults))
                 setScanResult(result.scanResults)
                 return result.scanResults
             })
-            .then(finalResult => printSummaryReport(finalResult)) 
+            .then(finalResult => printSummaryReport(finalResult))
             .catch(error => " There was error while featching Scan data from server" + error)
 
         // calling print Report ()
-       
+
     }
 
-   // useEffect(loadFromApi, []);
+    // useEffect(loadFromApi, []);
 
     const testDelta = () => {
 
@@ -85,21 +86,21 @@ const ComponentCvesScan = (props) => {
 
     }// close of function testDelta
 
-const scanId="S001"
-   // const scanId = ScanService.generateScanId();
+    const scanId = "S001"
+    // const scanId = ScanService.generateScanId();
     //const userName = localStorage.getItem("username")
     //const projectName = localStorage.getItem("scanProject")
-    const userName="Rakesh";
-    const projectName="BGSW";
+    const userName = "Rakesh";
+    const projectName = "BGSW";
 
 
-    const title = "Scan Id :" + scanId + "  Project Name :"+ projectName;
+    const title = "Scan Id :" + scanId + "  Project Name :" + projectName;
     /* function for Scannning component and saving to DB */
 
 
     const scanSbomHandler = () => {
 
-        
+
         scanComponentsFromApi();
         //printSummaryReport();
 
@@ -109,7 +110,7 @@ const scanId="S001"
     // logic for display Material Table 
 
     const printSummaryReport = (finalResult) => {
-       
+
 
         const scanReport = finalResult.map((comp) => {
 
@@ -120,7 +121,7 @@ const scanId="S001"
                 vendor: comp.vendor,
                 cveCount: comp.cveList.length,
                 highSeverity: comp.cveList.filter((cve) => cve.severity === 'HIGH').length,
-                falsePositive:"false",
+                category: "",
                 remarks: " "
             }
 
@@ -129,14 +130,42 @@ const scanId="S001"
         setScanReport(scanReport);
 
     }
+
+    // const to store value of  category 
+    const categoryList = [
+        { "value": 'accepted', "label": "Accepted" },
+
+        { "value": 'rejected', "label": "Rejected" },
+        { "value": 'pending', "label": "Pending" },
+        { "value": 'resolved', "label": "Resolved" }
+
+
+    ];
+
+
+
+
+
+
     const tableColumns = [
-        { title: ' Component  Name', field: 'componentName', filtering: false },
+        { title: 'Component Name', field: 'componentName', filtering: false },
         { title: 'Version ', field: 'version', filtering: false },
-        { title: 'Vendor', field: 'vendor', filtering: true },
-        { title: 'CVE Count', field: 'cveCount', filtering: true },
-        { title: ' High Severity', field: 'highSeverity', filtering: true, backgroundColor: 'red' },
-        { title: ' False Positive', field: 'falsePositive', filtering: true },
-        { title: ' Remarks ', field: 'remarks', filtering: true }
+        { title: 'Vendor', field: 'vendor', filtering: false },
+        { title: 'CVE Count', field: 'cveCount', filtering: false },
+        { title: ' High Severity', field: 'highSeverity', filtering: false, backgroundColor: 'red' },
+        { title: ' Category', field: 'category', filtering: false,
+    
+        editComponent: ({ value, onChange }) => (
+            <Select
+              options={categoryList}
+              name="categorySelect"
+              onChange={(selectedOption) => onChange(selectedOption.value)}
+              value={value ? value.value : value}
+            />
+          )
+    
+    },
+        { title: ' Remarks ', field: 'remarks', filtering: false }
     ];
 
 
@@ -159,38 +188,80 @@ const scanId="S001"
                 data={scanReport}
                 title={title}
                 options={{
-                    headerStyle: {
-                        borderBottomColor: 'red', borderBottomWidth: '3px', fontFamily: 'verdana', backgroundColor: '#01579b',
-                        color: '#FFF'
-                    },
+                    
+                
                     filtering: true,
                     sorting: true,
                     actionsColumnIndex: -1,
                     exportButton: true
                 }}
-                /*
-                detailPanel={rowData => {
-                    return (
-                        <div>
+                actions ={[
+                    
+                ]
 
-                            <ScanDashboard reportComp={rowData} dbData={scanResult}></ScanDashboard>
+                }
 
-                        </div>
-                    )
-                }}
-                /*
-                actions={[
-                    {
-                        icon: DetailsIcon,
-                        tooltip: "Detailed View  ",
-                        onClick: (event, rowData) => {
-                            const cveList = scanResult.components.filter(component => component.scanComponent.componentName === rowData.componentName && component.scanComponent.version === rowData.version)
-                            localStorage.setItem("cveList", cveList);
-                            navigate("/home/project/scan/results");
-                        }
+                editable={{
+                    /*
+                    onRowAdd: (newData) =>
+                      new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                          setData([...data, newData]);
+          
+                          resolve();
+                        }, 1000);
+                      }),
+                      */
+                    onRowUpdate: (newData, oldData) =>
+                      new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                          console.log("old:", oldData);
+                          console.log("new:", newData);
+                          const dataUpdate = [...scanReport];
+                          const index = oldData.tableData.id;
+                          dataUpdate[index] = newData;
+                         setScanReport([...dataUpdate]);
+          
+                          resolve();
+                        }, 1000);
+                      })
+                    }}
+                      /*
+                    onRowDelete: (oldData) =>
+                      new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                          const dataDelete = [...data];
+                          const index = oldData.tableData.id;
+                          dataDelete.splice(index, 1);
+                          setData([...dataDelete]);
+          
+                          resolve();
+                        }, 1000);
+                      })
+                  }}
+            /*
+            detailPanel={rowData => {
+                return (
+                    <div>
+
+                        <ScanDashboard reportComp={rowData} dbData={scanResult}></ScanDashboard>
+
+                    </div>
+                )
+            }}
+            
+            actions={[
+                {
+                    icon: DetailsIcon,
+                    tooltip: "Detailed View  ",
+                    onClick: (event, rowData) => {
+                        const cveList = scanResult.components.filter(component => component.scanComponent.componentName === rowData.componentName && component.scanComponent.version === rowData.version)
+                        localStorage.setItem("cveList", cveList);
+                        navigate("/home/project/scan/results");
                     }
-                ]}
-                */
+                }
+            ]}
+            */
 
             >
 
