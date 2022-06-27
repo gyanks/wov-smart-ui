@@ -178,11 +178,11 @@ const ComponentCvesScan = (props) => {
 
     const saveUserActionHandler =( )=> {
        alert(" User action updated to DB "+JSON.stringify(userRemarks));
-       /*
- fetch("", {
+       
+ fetch("https://5w3a2f7pqh.execute-api.ap-southeast-1.amazonaws.com/dev/usercomments", {
 
         method: "POST",
-        body: JSON.stringify(userRegistration),
+        body: JSON.stringify(userRemarks),
 
         headers: {
           "Content-type": "application/json",
@@ -197,33 +197,26 @@ const ComponentCvesScan = (props) => {
       ).then(data => {
 
         
-        if (data.statusCode === 409) {
+        if (data.statusCode === 400) {
           setError({
             "isError": true,
-            "errorMessage": "User already exist with this email id"
+            "errorMessage": "Server error while saving User Remarks  "
           })
-          alert(" User already exist with this email id");
-          Promise.reject("User already exist with this email id")
-        }
-        if (data.statusCode === 408) {
-          setError({
-            "isError": true,
-            "errorMessage": " Unable to send email to this Id, please contact Admin "
-          })
-          alert("Unable to send email to this Id, please contact Admin ");
-          Promise.reject("Unable to send email to this Id, please contact Admin")
-        }
-
+          alert(" Server error while saving User Remarks");
+          Promise.reject("Server error while saving User Remarks");
         
-          alert("user registered successful " + JSON.stringify(data));
-          navigate("/home/admin");
+        }
+        if(data.statusCode===200){
+        
+          alert("user  remarks saved successfully in database " );
+        }
         
       })
         .catch(error => console.log("there was error in user registration " + error));
 
       // saveToDb(userRegistration);
     };
-*/
+
     }
     return (
 
