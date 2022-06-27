@@ -3,7 +3,7 @@ import Display  from './Display'
 import DisplayReportXls from "./DisplayReportXls";
 const DisplayScanResults = (props) => {
 
-      const  cveList= localStorage.getItem("cveList");
+      const  cveList= JSON.parse(localStorage.getItem("cveList"));
       return (
             <div>
      { cveList.map((cve) => 

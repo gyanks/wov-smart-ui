@@ -21,7 +21,7 @@ const ComponentCvesScan = (props) => {
     const [dbScanData, setDbScanData] = useState([]);
     const [scanResult, setScanResult] = useState([])
     const [scanReport, setScanReport] = useState([])
-
+    const [userRemarks,setUserRemarks] = useState();
     const navigate = useNavigate();
 
 
@@ -175,6 +175,56 @@ const ComponentCvesScan = (props) => {
         navigate("/home/project/dashboard");
     }
 
+
+    const saveUserActionHandler =( )=> {
+       alert(" User action updated to DB "+JSON.stringify(userRemarks));
+       /*
+ fetch("", {
+
+        method: "POST",
+        body: JSON.stringify(userRegistration),
+
+        headers: {
+          "Content-type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      }).then(response => {
+
+
+        return response.json()
+      }
+
+      ).then(data => {
+
+        
+        if (data.statusCode === 409) {
+          setError({
+            "isError": true,
+            "errorMessage": "User already exist with this email id"
+          })
+          alert(" User already exist with this email id");
+          Promise.reject("User already exist with this email id")
+        }
+        if (data.statusCode === 408) {
+          setError({
+            "isError": true,
+            "errorMessage": " Unable to send email to this Id, please contact Admin "
+          })
+          alert("Unable to send email to this Id, please contact Admin ");
+          Promise.reject("Unable to send email to this Id, please contact Admin")
+        }
+
+        
+          alert("user registered successful " + JSON.stringify(data));
+          navigate("/home/admin");
+        
+      })
+        .catch(error => console.log("there was error in user registration " + error));
+
+      // saveToDb(userRegistration);
+    };
+*/
+    }
     return (
 
         <div>
@@ -195,11 +245,7 @@ const ComponentCvesScan = (props) => {
                     actionsColumnIndex: -1,
                     exportButton: true
                 }}
-                actions ={[
-                    
-                ]
-
-                }
+                
 
                 editable={{
                     /*
@@ -221,6 +267,7 @@ const ComponentCvesScan = (props) => {
                           const index = oldData.tableData.id;
                           dataUpdate[index] = newData;
                          setScanReport([...dataUpdate]);
+                         setUserRemarks([...dataUpdate]);
           
                           resolve();
                         }, 1000);
@@ -239,7 +286,7 @@ const ComponentCvesScan = (props) => {
                         }, 1000);
                       })
                   }}
-            /*
+            
             detailPanel={rowData => {
                 return (
                     <div>
@@ -249,25 +296,27 @@ const ComponentCvesScan = (props) => {
                     </div>
                 )
             }}
+            */
             
             actions={[
                 {
                     icon: DetailsIcon,
                     tooltip: "Detailed View  ",
                     onClick: (event, rowData) => {
-                        const cveList = scanResult.components.filter(component => component.scanComponent.componentName === rowData.componentName && component.scanComponent.version === rowData.version)
-                        localStorage.setItem("cveList", cveList);
-                        navigate("/home/project/scan/results");
+                        
+                        
+                        localStorage.setItem("cveList", JSON.stringify(scanResult[rowData.tableData.id].cveList));
+                       navigate("/home/project/scan/results");
                     }
                 }
             ]}
-            */
+            
 
             >
 
             </MaterialTable>
 
-
+             <button   style={{ textAlign: "center" }} onClick={saveUserActionHandler}> Save </button> 
         </div>
         /* 
                             } */
