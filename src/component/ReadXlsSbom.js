@@ -25,6 +25,8 @@ const ReadXlsSbom = (props) => {
     const [scanComponents, setScanComponents] = useState([]);
     const [sbomFmt, setSbomFmt] = useState();
     const [accept, setAccept] = useState();
+    const [enable,setEnable] =useState(true);
+
     const params = useParams();
     //const {project} =params;
 
@@ -164,6 +166,7 @@ const ReadXlsSbom = (props) => {
             setAccept("text/xml")
         if (type === "json")
             setAccept("application/json")
+    setEnable(false);
     }
 
 
@@ -185,7 +188,7 @@ const ReadXlsSbom = (props) => {
                 </select>
 
                 <p style={{ textAlign: "center" }}>please upload SBOM
-                    <input style={{ padding: "15px" }} type="file" accept={accept} onChange={onChange} />
+                    <input  disabled={enable} style={{ padding: "15px" }} type="file" accept={accept} onChange={onChange} />
                 </p>
             </div>
 
