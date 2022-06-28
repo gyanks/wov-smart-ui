@@ -25,7 +25,7 @@ const DisplayScanResults = (props) => {
 
       const tableColumns = [
             { title: 'CVE ID', field: 'vulnId', filtering: false },
-            { title: 'Description ', field: 'description', filtering: false },
+            { title: 'Description ', field: 'Description', filtering: false },
             { title: 'Vector String', field: 'vectorString', filtering: false },
             { title: 'Impact Score', field: 'impactScore', filtering: true },
             { title: ' CVE Score', field: 'cveScore', filtering: true },
