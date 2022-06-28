@@ -5,6 +5,10 @@ import Select from 'react-select'
 import MaterialTable from 'material-table';
 
 import DetailsIcon from '@mui/icons-material/Details';
+import IconButton from "@material-ui/core/IconButton";
+import Settings from "@material-ui/icons/Settings";
+import ViewColumn from '@material-ui/icons/ViewColumn';
+
 
 import CvesScanService from './CvesScanService';
 import DisplayScanResults from './DisplayScanResults';
@@ -22,9 +26,26 @@ const ComponentCvesScan = (props) => {
     const [scanResult, setScanResult] = useState([])
     const [scanReport, setScanReport] = useState([])
     const [userRemarks,setUserRemarks] = useState();
+    const [error,setError]= useState();
     const navigate = useNavigate();
 
+    const tableIcons = {
+      Edit: () => <Settings />,
+      Cancel: () => <Settings/>,
+      Save: () => <Settings/>,
 
+    };
+
+/*
+    const tableIcons = {
+      Save: forwardRef((props,ref) => <Save {...props} ref={ref} />),
+      Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+      Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+      Delete: forwardRef((props, ref) => <Delete {...props} ref={ref} />),
+      Cancel: forwardRef((props, ref) => <Cancel {...props} ref={ref} />),
+      Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+  };
+*/
     const scanComponentsFromApi = () => {
         //console.log("scanning for components "+ JSON.stringify(props.components))
         const requestBody = {
@@ -217,19 +238,21 @@ const ComponentCvesScan = (props) => {
       // saveToDb(userRegistration);
     };
 
-    }
+    
     return (
 
         <div>
             <div style={{ textAlign: "center" }}>
 
-                <button onClick={scanSbomHandler} style={{ backgroundColor: "blueviolet" }}> Scan SBOM </button>
-                <button onClick={projectDashboardHandler} style={{ backgroundColor: "blueviolet" }} > View dashboard</button>
+                <button onClick={scanSbomHandler} > Scan SBOM </button>
+                <button onClick={projectDashboardHandler}  > View dashboard</button>
             </div>
             <MaterialTable
                 columns={tableColumns}
                 data={scanReport}
                 title={title}
+                
+
                 options={{
                     
                 
@@ -293,7 +316,7 @@ const ComponentCvesScan = (props) => {
             
             actions={[
                 {
-                    icon: DetailsIcon,
+                    icon: ViewColumn,
                     tooltip: "Detailed View  ",
                     onClick: (event, rowData) => {
                         
@@ -301,7 +324,9 @@ const ComponentCvesScan = (props) => {
                         localStorage.setItem("cveList", JSON.stringify(scanResult[rowData.tableData.id].cveList));
                        navigate("/home/project/scan/results");
                     }
-                }
+                },
+
+               
             ]}
             
 
