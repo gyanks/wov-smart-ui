@@ -8,7 +8,8 @@
         {"componentName":"MySQL", "version" : "8.5.0", "vendor" :"oracle"},
         {"componentName":"Tomcat", "version" : "11.0.0", "vendor" :"Apache"}
 
-    ]
+    ],
+    "scan": 2
     
 },
 
@@ -24,7 +25,8 @@
         {"componentName":"MySQL", "version" : "7.5.0", "vendor" :"oracle"},
         {"componentName":"Tomcat", "version" : "9.0.0", "vendor" :"Apache"}
 
-    ]
+    ],
+    "scan" :1
     
 },
 {
@@ -49,8 +51,8 @@
         {"componentName":"Tomcat", "version" : "11.0.0", "vendor" :"Apache"}
        
 
-    ]
-    
+    ],
+    "scan":0
 },
 {
     "projectId": "P006",
@@ -62,7 +64,8 @@
         {"componentName":"MySQL", "version" : "8.5.0", "vendor" :"oracle"},
         {"componentName":"Tomcat", "version" : "11.0.0", "vendor" :"Apache"},
         {"componentName":"MySQL", "version" : "7.5.0", "vendor" :"oracle"}
-    ]
+    ],
+    "scan":6
     
 },
 {
@@ -73,7 +76,8 @@
     "components": [
         {"componentName":"MySQL", "version" : "8.5.0", "vendor" :"oracle"}
        
-    ]
+    ],
+    "scan":3
     
 },
 
@@ -87,7 +91,8 @@
         {"componentName":"MySQL", "version" : "8.5.0", "vendor" :"oracle"},
         {"componentName":"Tomcat", "version" : "11.0.0", "vendor" :"Apache"},
         {"componentName":"MySQL", "version" : "7.5.0", "vendor" :"oracle"}
-    ]
+    ],
+    "scan":6
     
 },
 {
@@ -98,7 +103,8 @@
     "components":[
         {"componentName":"MySQL", "version" : "8.5.0", "vendor" :"oracle"}
         
-    ]
+    ],
+    "scan":4
     
 }
  ]}

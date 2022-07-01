@@ -14,6 +14,12 @@ projectUsers:[
 
 
 
+Date: 01/07/22
+
+Data Model for Project dashboard :
+
+
+
 
 
 

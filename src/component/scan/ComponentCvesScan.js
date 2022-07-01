@@ -245,7 +245,7 @@ const ComponentCvesScan = (props) => {
             <div style={{ textAlign: "center" }}>
 
                 <button onClick={scanSbomHandler} > Scan SBOM </button>
-                <button onClick={projectDashboardHandler}  > View dashboard</button>
+               
             </div>
             <MaterialTable
                 columns={tableColumns}

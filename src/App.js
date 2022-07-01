@@ -5,7 +5,7 @@ import ReadXlsSbom from './component/ReadXlsSbom';
 import ResponsiveAppBar from './component/ui/ResponsiveAppBar';
 import NavBar from './component/ui/NavBar';
 import SignInSide from './component/ui/SignInSide';
-import ViewDashboard from './component/projects/ProjectDashboard';
+import ViewDashboard from './component/projects/ProjectDashBoard';
 import ComponentCvesScan from './component/scan/ComponentCvesScan';
 import DisplayScanResults from './component/scan/DisplayScanResults';
 
