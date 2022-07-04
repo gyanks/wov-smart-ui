@@ -99,7 +99,7 @@ const ComponentCvesScan = (props) => {
         else {
             const allScanedComponents = ScanDbService.fetchScanComponents4Project(dbScanData, projectName)
             const deltaComponents = ScanDbService.findDeltaComponents(allScanedComponents, components);
-            console.log(" Deta components " + JSON.stringify(deltaComponents))
+            console.log(" Delta components " + JSON.stringify(deltaComponents))
 
 
         }
@@ -112,7 +112,7 @@ const ComponentCvesScan = (props) => {
     //const userName = localStorage.getItem("username")
     //const projectName = localStorage.getItem("scanProject")
     const userName = "Rakesh";
-    const projectName = "BGSW";
+    const projectName = JSON.parse(localStorage.getItem("scanProject")).projectName;
 
 
     const title = "Scan Id :" + scanId + "  Project Name :" + projectName;

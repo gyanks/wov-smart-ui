@@ -7,9 +7,10 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;*/
 
 import { CanvasJSChart } from "canvasjs-react-charts";
 
-const ComponentVulnChart = (props) => {
-
-
+const ProjectComponentChart = (props) => {
+   
+    
+/*
     let sum = 0;
     for (let result of props.scanReport) {
 
@@ -17,14 +18,16 @@ const ComponentVulnChart = (props) => {
     }
 
     console.log(" sum of cves " + sum)
+    */
 
-    const chartData = props.scanReport.map((scan) => {
+    const chartData = props.projects.data.map((project) => {
 
         return {
-            "name": scan.componentName,
-            "label": scan.componentName,
+            "name": project.projectName,
+            "label": project.projectName,
 
-            "y": Math.round(parseInt(scan.cves.cveCount) / sum * 100)
+           // "y": Math.round(parseInt(scan.cves.cveCount) / sum * 100)
+           "y": project.components.length
         }
 
     });
@@ -34,21 +37,14 @@ const ComponentVulnChart = (props) => {
     const options = {
         animationEnabled: true,
         title: {
-            text: "CVEs by Components"
+            text: "Components by Project"
         },
-/*
-        subtitles: [{
-            text: "71% Positive",
-            verticalAlign: "center",
-            fontSize: 24,
-            dockInsidePlotArea: true
-        }],
-*/
+
         data: [{
-            type: "doughnut",
+            type: "column",
             showInLegend: true,
-            indexLabel: "{name}: {y}",
-            yValueFormatString: "#,###'%'",
+            indexLabel: "Components : {y}",
+            yValueFormatString: "#",
             dataPoints: chartData
         }]
     }
@@ -62,4 +58,4 @@ const ComponentVulnChart = (props) => {
 }
 
 
-export default ComponentVulnChart;
+export default ProjectComponentChart ;

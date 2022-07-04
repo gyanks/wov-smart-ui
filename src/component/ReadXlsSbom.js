@@ -22,10 +22,13 @@ import './ReadXlsSbom.css'
 
 */
 const ReadXlsSbom = (props) => {
+
     const [scanComponents, setScanComponents] = useState([]);
     const [sbomFmt, setSbomFmt] = useState();
     const [accept, setAccept] = useState();
     const [enable,setEnable] =useState(true);
+
+    const scanproject = localStorage.getItem("scanProject");
 
     const params = useParams();
     //const {project} =params;
@@ -170,7 +173,7 @@ const ReadXlsSbom = (props) => {
     }
 
 
-    const scanproject = localStorage.getItem("scanProject");
+    
 
 
 
@@ -179,7 +182,7 @@ const ReadXlsSbom = (props) => {
             <div class="form-box">
 
 
-                <p class="main-text">  Project for Scan : {scanproject}  </p>
+                
 
                 SBOM Format   <select onChange={selectHandler}>
                     <option value="xls">Excel Sheet</option>

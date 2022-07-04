@@ -50,7 +50,7 @@ const DisplayScanResults = (props) => {
 
       const saveCveRemarksHandler = () => {
 
-            alert(" Remarks saved to Backend" );
+            alert(" Remarks saved to Backend");
       }
 
       return (

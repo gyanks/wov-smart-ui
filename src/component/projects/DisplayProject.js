@@ -1,14 +1,41 @@
+
+import  {useNavigate} from 'react-router-dom'
 import './DisplayProject.css'
 const DisplayProject = (props) => {
+
+    const navigate= useNavigate();
     const proj = props.project;
-     console.log("Inside display "+ JSON.stringify(proj))
+     console.log("Inside display "+ JSON.stringify(proj));
+
+     const scanComponentsHandler= (proj) => {
+         console.log("Scaniing for project" + JSON.stringify(proj))
+         localStorage.setItem("scanProject",JSON.stringify(proj))
+         navigate("/home/project/sbom")
+
+     }
+
+     const scanHistoryHandler = (proj) => {
+
+        localStorage.setItem("scanProject",JSON.stringify(proj))
+        navigate("/home/project/scan/history")
+
+     }
+
+
+     const viewDetailsHandler = (proj) => {
+        localStorage.setItem("scanProject",JSON.stringify(proj))
+        navigate("/home/project/details")
+
+
+
+     }
     return (
 
         <div className='project'>
             <nav className ="project__nav">
-              <button>Scan Component</button>
-              <button> Scan History</button>
-              <button> View Details </button>
+              <button onClick={() => scanComponentsHandler(proj)}>Scan Component</button>
+              <button onClick={() => scanHistoryHandler(proj)}> Scan History</button>
+              <button onClick={() => viewDetailsHandler(proj)}>  View Details </button>
             </nav>
            
             <div className="project__main">
