@@ -130,7 +130,7 @@ export default function SignInSide(props) {
         // navigation page 
 
         if (data.body.role === 'user')
-          navigate("/home/project/sbom");
+          navigate("/home/project/dashboard");
         if (data.body.role === 'admin' || data.body.role === 'Admin')
           navigate("/home/admin");
 
