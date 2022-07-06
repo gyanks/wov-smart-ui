@@ -54,10 +54,10 @@ export default function SignInSide(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const loginData = new FormData(event.currentTarget);
     const loginUser = {
-      "username": data.get('username'),
-      "password": data.get("password")
+      "username": loginData.get('username').toLowerCase(),
+      "password": loginData.get("password")
     }
 
 
@@ -67,8 +67,8 @@ export default function SignInSide(props) {
 
       // Adding body or contents to send
       body: JSON.stringify({
-        "email": data.get('username'),
-        "password": data.get('password')
+        "email": loginData.get('username').toLowerCase(),
+        "password": loginData.get('password')
       }),
 
       // Adding headers to the request

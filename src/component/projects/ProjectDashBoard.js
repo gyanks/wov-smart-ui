@@ -1,6 +1,7 @@
 import dummyProjects from './data/DummyProject.json'
 import DisplayProject from './DisplayProject';
 import ProjectComponentChart from './ProjectComponentChart';
+import VulnComponentChart from './VulnComponentChart';
 const ProjectDashBoard = () => {
 
     const projects = dummyProjects;
@@ -56,7 +57,7 @@ const ProjectDashBoard = () => {
 
             </div>
             <div> 
-            <ProjectComponentChart projects={projects}></ProjectComponentChart>
+            <VulnComponentChart></VulnComponentChart>
               
             </div>
             <div>

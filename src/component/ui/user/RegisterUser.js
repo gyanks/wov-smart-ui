@@ -1,6 +1,12 @@
-import './RegisterUser.css'
+
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import PhoneInput from 'react-phone-number-input'
+
+import 'react-phone-number-input/style.css'
+import './RegisterUser.css'
+
+
 const RegisterUser = () => {
 
   const RegistrationForm = () => {
@@ -101,7 +107,7 @@ const RegisterUser = () => {
 
       ).then(data => {
 
-        
+
         if (data.statusCode === 409) {
           setError({
             "isError": true,
@@ -119,10 +125,10 @@ const RegisterUser = () => {
           Promise.reject("Unable to send email to this Id, please contact Admin")
         }
 
-        
-          alert("user registered successful " + JSON.stringify(data));
-          navigate("/home/admin");
-        
+
+        alert("user registered successful " + JSON.stringify(data));
+        navigate("/home/admin");
+
       })
         .catch(error => console.log("there was error in user registration " + error));
 
@@ -188,12 +194,16 @@ const RegisterUser = () => {
           </div>
 
           <div className='row'>
-            <label className="col-10">Mobile Number</label>
-            <input className="col-90" type="text" value={mobile} onChange={mobileHandler}></input>
+          <label className='col-10'>Mobile</label>
+            <PhoneInput   style ={{width:"45%"}}className="col-90" placeHolder='Enter Mobile Number' defaultCountry='IN' value={mobile} onChange={mobile => setMobile(mobile)}></PhoneInput>
+            
           </div>
           <div className="row">
             <label className='col-10'>Role </label>
-            <input className="col-90" type="text" value={role} onChange={roleHandler}></input>
+            <select  style={{width:"45%"}}className="col-90"  value={role} onChange={roleHandler}>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
           </div>
 
           <div className="row">
@@ -209,10 +219,10 @@ const RegisterUser = () => {
           <button type="submit"> Submit</button>
         </form>
 
-         <div style={{"color":'red'}}> 
+        <div style={{ "color": 'red' }}>
 
-           <h3> {error.isError ?error.errorMessage : " "}</h3>
-         </div>
+          <h3> {error.isError ? error.errorMessage : " "}</h3>
+        </div>
       </div>
     );
   }

@@ -171,6 +171,7 @@ const AddProject = () => {
                 Promise.reject("Project name already exist ")
             }
             else {
+                if(data.statusCode === 200)
                 alert("Project added successfully ")
                 navigate("/home/admin");
             }

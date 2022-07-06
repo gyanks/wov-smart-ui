@@ -23,7 +23,6 @@ const AdminHomePage = () => {
                 <a href="/home/user/registration"> Create User </a>
                 <a href="/home/admin/assign"> Assign Project</a>
                 <a href="/home/admin/role"> Manage Role</a>
-                <a href="#">Block User</a>
                
                 </div>
            
