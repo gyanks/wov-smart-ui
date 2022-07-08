@@ -127,7 +127,7 @@ const AddProject = () => {
         const projectData = new FormData(event.currentTarget);
 
         const project = {
-            "id": projectData.get("projectId"),
+           
             projectName: projectData.get("projectName"),
             //version,
             client_name: projectData.get("clientName"),
@@ -209,10 +209,7 @@ const AddProject = () => {
 
                 <form onSubmit={submitHandler}>
 
-                    <div className="form__group">
-                        <label className="form__label">Project ID</label>
-                        <input className="form__input" id="projectId" name="projectId" type="text" ></input>
-                    </div>
+                   
 
                     <div className="form__group">
                         <label className="form__label">Project Name</label>

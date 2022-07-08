@@ -21,9 +21,8 @@ const AdminHomePage = () => {
                 
                 <a href="/home/admin/project/add"> Create Project </a>
                 <a href="/home/user/registration"> Create User </a>
-                <a href="/home/admin/assign"> Assign Project</a>
-                <a href="/home/admin/role"> Manage Role</a>
-               
+                <a href="/home/admin/role"> Assign Project</a>
+                
                 </div>
            
             </div>

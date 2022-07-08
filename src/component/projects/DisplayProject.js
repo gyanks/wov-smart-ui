@@ -35,7 +35,7 @@ const DisplayProject = (props) => {
             <nav className ="project__nav">
               <button onClick={() => scanComponentsHandler(proj)}>Scan Component</button>
               <button onClick={() => scanHistoryHandler(proj)}> Scan History</button>
-              <button onClick={() => viewDetailsHandler(proj)}>  View Details </button>
+              
             </nav>
            
             <div className="project__main">

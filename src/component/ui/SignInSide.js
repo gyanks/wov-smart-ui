@@ -61,7 +61,7 @@ export default function SignInSide(props) {
     }
 
 
-    fetch("https://5w3a2f7pqh.execute-api.ap-southeast-1.amazonaws.com/dev/login", {
+    fetch("https://b58laqvjjg.execute-api.ap-southeast-1.amazonaws.com/dev/login", {
       // Adding method type
       method: "POST",
 

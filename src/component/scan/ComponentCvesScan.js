@@ -51,6 +51,15 @@ const ComponentCvesScan = (props) => {
         const requestBody = {
             "scanComponents": props.components
         };
+       
+       
+            requestBody.scanComponents.forEach(comp => { 
+              if (comp['tableData'])
+              delete comp['tableData']
+            });
+
+
+       
 
         console.log("API call  for components " + JSON.stringify(requestBody));
 
@@ -65,7 +74,7 @@ const ComponentCvesScan = (props) => {
         }).
             then(response => response.json()).
             then(result => {
-                console.log("scan result from api" + JSON.stringify(result.scanResults))
+               // console.log("scan result from api" + JSON.stringify(result.scanResults))
                 setScanResult(result.scanResults)
                 return result.scanResults
             })
@@ -238,11 +247,14 @@ const ComponentCvesScan = (props) => {
       // saveToDb(userRegistration);
     };
 
+   
     
     return (
 
         <div>
             <div style={{ textAlign: "center" }}>
+
+            
 
                 <button onClick={scanSbomHandler} > Scan SBOM </button>
                

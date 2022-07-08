@@ -8,7 +8,7 @@ import SignInSide from './component/ui/SignInSide';
 import ViewDashboard from './component/projects/ProjectDashBoard';
 import ComponentCvesScan from './component/scan/ComponentCvesScan';
 import DisplayScanResults from './component/scan/DisplayScanResults';
-
+import ViewScanHistory from './component/projects/ViewScanHistory';
 import RegisterUser from './component/ui/user/RegisterUser';
 import AdminHomePage from './component/admin/AdminHomePage';
 
@@ -35,7 +35,7 @@ function App() {
         <Route path="/home" element={<ResponsiveAppBar />}></Route>
         <Route path="/home/project/dashboard" element={<ViewDashboard />}></Route>
         <Route path="/home/project/scan" element={<ComponentCvesScan />}></Route>
-        
+        <Route path="/home/project/scan/history" element={<ViewScanHistory/>}></Route>
         <Route path="/home/project/scan/results" element={<DisplayScanResults />}></Route>
         <Route path="/home/project/sbom" element={<ReadXlsSbom />}></Route>
         <Route path="/home/project/sbom/:project" element={<ReadXlsSbom />}></Route>

@@ -28,10 +28,31 @@ const RegisterUser = () => {
       'isError': false,
       "errorMessage": ""
     });
+  const [emailInvalid,setEmailInvalid] = useState('');
+  const [ firstNameInvalid,setFirstNameInvalid] = useState('');
+  const[formInvalid,setFormInvalid] = useState(false)
+   
+  
+  const userIdHandler = (e) => {
+      const formEmail=e.target.value;
 
+      if(formEmail=='' || formEmail==null){
 
-    const userIdHandler = (e) => {
-      setUserId(e.target.value);
+        setFormInvalid(true);
+        setEmailInvalid("Email is Required ");
+        return ;
+      }
+      //(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+[\.[A-Z]{2,}]{1,2}$/i.test(formEmail)
+      else if(! formEmail.include('@')){
+        setFormInvalid(true);
+        setEmailInvalid("Email should be in correct format");
+        return ;
+
+      }
+      else{
+        setEmailInvalid(" ")
+      }
+      setUserId(formEmail);
       setSubmitted(false);
     };
 
@@ -58,10 +79,34 @@ const RegisterUser = () => {
     };
     const companyHandler = (e) => {
       setCompany(e.target.value);
-      setSubmitted(false);
+      setSubmitted(true);
     };
 
     const firstNameHandler = (e) => {
+      const formFirstName=e.target.value;
+      if(formFirstName=='' || formFirstName.length===0){
+
+        setFirstNameInvalid("First name is Required");
+        setFormInvalid(true);
+        return;
+
+      }
+     else  if(formFirstName.length<3){
+
+        setFirstNameInvalid(" First name should be minumum 3 charactors")
+        setFormInvalid(true);
+
+      }
+
+     else  if(!formFirstName.match(/^[a-zA-Z]+$/)){
+        setFirstNameInvalid(" First Name should have Alphabates Only ")
+        setFormInvalid(true);
+
+
+      }
+      else{
+        setFirstNameInvalid("")
+      }
       setFirstName(e.target.value);
       setSubmitted(false);
     };
@@ -90,7 +135,7 @@ const RegisterUser = () => {
 
       console.log(" for registrtion" + JSON.stringify(userRegistration));
 
-      fetch("https://5w3a2f7pqh.execute-api.ap-southeast-1.amazonaws.com/dev/users/register", {
+      fetch("https://b58laqvjjg.execute-api.ap-southeast-1.amazonaws.com/dev/registeruser", {
 
         method: "POST",
         body: JSON.stringify(userRegistration),
@@ -126,7 +171,7 @@ const RegisterUser = () => {
         }
 
 
-        alert("user registered successful " + JSON.stringify(data));
+        alert("user registered successful " );
         navigate("/home/admin");
 
       })
@@ -178,19 +223,21 @@ const RegisterUser = () => {
     return (
       <div className="container">
 
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler} noValidate>
           <div className="row">
             <div className="row">
               <label className="col-10">Email </label>
-              <input className="col-90" type="text" value={userId} onChange={userIdHandler}></input>
+              <input className="col-90" name="email" type="email" required value={userId} onChange={userIdHandler}></input>
+              <span style={{"color":'red'}}>{emailInvalid}</span>
             </div>
             <label className="col-10">FirstName</label>
-            <input className="col-90" type="text" value={firstName} onChange={firstNameHandler}></input>
+            <input className="col-90"  name="firstName" type="text"  required minLength="3" value={firstName} onChange={firstNameHandler}></input>
+            <span style= {{"color":'red'}}>  {firstNameInvalid}</span>
           </div>
 
           <div className='row'>
             <label className='col-10'>LastName</label>
-            <input className="col-90" type="text" value={lastName} onChange={lastNameHandler}></input>
+            <input className="col-90" name="lastName" type="text" value={lastName} onChange={lastNameHandler}></input>
           </div>
 
           <div className='row'>
@@ -208,7 +255,7 @@ const RegisterUser = () => {
 
           <div className="row">
             <label className='col-10'>Company Name </label>
-            <input className="col-90" type="text" value={company} onChange={companyHandler}></input>
+            <input className="col-90"  required type="text" value={company} onChange={companyHandler}></input>
           </div>
 
 
@@ -216,7 +263,7 @@ const RegisterUser = () => {
 
 
 
-          <button type="submit"> Submit</button>
+          <button type="submit" disabled={!submitted}> Submit</button>
         </form>
 
         <div style={{ "color": 'red' }}>
