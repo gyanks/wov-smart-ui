@@ -24,7 +24,7 @@
     "file-saver": "^2.0.5",
     "live-server": "^1.2.2",
     "material-table": "^1.69.3",
-    "mongoose": "^6.2.4",
+    "mongoose": "^6.13.8",
     "mysql": "^2.18.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.2",
